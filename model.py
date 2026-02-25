@@ -7,6 +7,7 @@ from tensorflow.keras.layers import LSTM, Dense
 def train_lstm(df):
     data = df["Close"].values.reshape(-1, 1)
     scaler = MinMaxScaler()
+    data = data.dropna()
     scaled_data = scaler.fit_transform(data)
 
     X = []
