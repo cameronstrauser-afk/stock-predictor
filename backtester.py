@@ -6,6 +6,7 @@ def backtest(df):
     df.loc[df["Close"] < df["Close"].rolling(50).mean(), "Signal"] = -1
 
     df["Returns"] = df["Close"].pct_change()
+    print(df.columns)
     df["Strategy"] = df["Signal"].shift(1) * df["Returns"]
 
     cumulative = (1 + df["Strategy"]).cumprod()
