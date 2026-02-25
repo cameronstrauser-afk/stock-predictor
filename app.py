@@ -64,7 +64,7 @@ st.write(crash_risk)
 
 # -------- BUY/SELL SIGNAL --------
 st.subheader("🔥 Signal")
-
+probability = df["Signal"].iloc[-1]
 if probability > 5 and crash_risk == "LOW":
     st.success("🚀 STRONG BUY")
 elif probability > 2:
