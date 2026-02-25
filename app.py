@@ -32,7 +32,8 @@ df = yf.download(ticker, start=start, end=end)
 # -------- AI FORECAST --------
 with st.spinner("Training AI Model..."):
     model, scaler = train_lstm(df)
-    future_price = predict_future(model, scaler, df)
+future_price = predict_future(model, scaler, df)
+future_price = float(np.array(future_price).flatten()[-1])
 
 current_price = df["Close"].iloc[-1]
 probability = (future_price - current_price) / current_price * 100
