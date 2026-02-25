@@ -29,15 +29,22 @@ start = end - timedelta(days=365)
 
 df = yf.download(ticker, start=start, end=end)
 
+
 # -------- AI FORECAST --------
 with st.spinner("Training AI Model..."):
     model, scaler = train_lstm(df)
-future_price = predict_future(model, scaler, df)
-future_price = float(np.array(future_price).flatten()[-1])
+    future_price = predict_future(model, scaler, df)
 
-current_price = df["Close"].iloc[-1]
-probability = (future_price - current_price) / current_price * 100
+# Force future_price into a single float
+future_price = np.array(future_price).flatten()[-1]
+future_price = float(future_price)
 
+# Force current_price into float
+current_price = float(df["Close"].iloc[-1])
+
+# Now probability MUST be float
+probability = float((future_price - current_price) / current_price * 100)
+st.write("Probability type:", type(probability))
 # -------- BACKTEST --------
 strategy_return = backtest(df)
 
@@ -67,7 +74,7 @@ st.write(crash_risk)
 st.subheader("🔥 Signal")
 print(type(probability))
 
-if probability > 5 and crash_risk == "LOW":
+if probability > 0.5 and crash_risk == "LOW":
     st.success("🚀 STRONG BUY")
 elif probability > 2:
     st.info("📈 BUY")
