@@ -67,7 +67,7 @@ st.write(crash_risk)
 st.subheader("🔥 Signal")
 print(type(probability))
 
-if probability > 0.5 and crash_risk == "LOW":
+if probability > 5 and crash_risk == "LOW":
     st.success("🚀 STRONG BUY")
 elif probability > 2:
     st.info("📈 BUY")
